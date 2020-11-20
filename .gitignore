@@ -2,3 +2,9 @@
 data/*
 temps/*
 save/*
+logs/*
+
+!data/.gitkeep
+!temps/.gitkeep
+!save/.gitkeep
+!log/.gitkeep
