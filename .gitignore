@@ -1,13 +1,12 @@
 .DS_Store
 data/*
 temps/*
-save/*
+.idea/*
 logs/*
 src/__pycache__/*
-.idea/*
+
 
 !data/.gitkeep
 !temps/.gitkeep
 !save/.gitkeep
 !log/.gitkeep
-!save/objects/.gitkeep
