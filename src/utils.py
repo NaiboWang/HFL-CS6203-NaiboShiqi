@@ -183,6 +183,8 @@ def average_weights(w, n_samples, args):
     n_total = sum(n_samples)
     w_avg = copy.deepcopy(w[0])
     for key in w_avg.keys():
+        if args.secret_share == 1:
+            print("Secret adding on key {}".format(key))
         w_avg[key] = (n_samples[0] / n_total) * w_avg[key]
         for i in range(1, len(w)):
             w_avg[key] = additive(w_avg[key], (n_samples[i] / n_total) * w[i][key], args)

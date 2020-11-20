@@ -27,9 +27,9 @@ def args_parser():
                         directly sum")
     parser.add_argument('--worker_number', type=int, default=0,
                         help="worker number")
-    parser.add_argument('--address', type=str, default='localhost',
+    parser.add_argument('--address', type=str, default='172.17.0.2',
                         help="address of client")
-    parser.add_argument('--ss_address', type=str, default='localhost',
+    parser.add_argument('--ss_address', type=str, default='172.17.0.2',
                         help="address of secret sharing server")
 
     # federated arguments (Notation for the arguments followed from paper)
