@@ -3,8 +3,10 @@ data/*
 temps/*
 save/*
 logs/*
+src/__pycache__/*
 
 !data/.gitkeep
 !temps/.gitkeep
 !save/.gitkeep
 !log/.gitkeep
+!save/objects/.gitkeep
