@@ -4,6 +4,7 @@ temps/*
 save/*
 logs/*
 src/__pycache__/*
+.idea/*
 
 !data/.gitkeep
 !temps/.gitkeep
