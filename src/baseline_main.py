@@ -57,11 +57,11 @@ if __name__ == '__main__':
             optimizer.step()
 
         # Train Accuracy
-        train_acc, train_loss = test_inference(args, global_model, train_dataset)
+        train_acc, train_loss, _, _ = test_inference(args, global_model, train_dataset)
         print('\r\nTraining on', len(train_dataset), 'samples')
         print("Training Accuracy: {:.2f}%, loss: {} for epoch {}".format(100 * train_acc, train_loss, epoch + 1))
         # testing
-        test_acc, test_loss = test_inference(args, global_model, test_dataset)
+        test_acc, test_loss, _, _ = test_inference(args, global_model, test_dataset)
         print('Test on', len(test_dataset), 'samples')
         print("Test Accuracy: {:.2f}%, loss: {} for epoch {}".format(100 * test_acc, test_loss, epoch + 1))
         train_accuracy.append(train_acc)

@@ -80,19 +80,21 @@ if __name__ == '__main__':
         # print global training loss every 'print_every' round
         if (epoch + 1) % print_every == 0:
             print(f' \nAvg Training Stats after {epoch + 1} global rounds:')
-            train_acc, train_loss = test_inference(args, global_model, train_dataset)
+            train_acc, train_loss, _, _ = test_inference(args, global_model, train_dataset)
             print("Accuracy for training set: {}, loss:{} after {} epochs\n".format(train_acc, train_loss, epoch + 1))
-            test_acc, test_loss = test_inference(args, global_model, test_dataset)
+            test_acc, test_loss, _, _ = test_inference(args, global_model, test_dataset)
             print("Accuracy for test set: {}, loss:{} after {} epochs\n".format(test_acc, test_loss, epoch + 1))
             temp_weights = global_model.state_dict()
-            client_accs = 0
+            client_totals = 0
+            client_corrects = 0
             for i in range(len(local_weights)):
                 global_model.load_state_dict(local_weights[i])
-                client_acc, _ = test_inference(args, global_model, test_dataset)
-                client_accs += client_acc
-            client_accs /= len(local_weights)
+                client_acc, client_loss, client_correct, client_total = test_inference(args, global_model, test_dataset)
+                client_totals += client_total
+                client_corrects += client_correct
+            client_accs = client_corrects / client_totals
             client_accuracy.append(client_accs)
-            print("Client accuracy:", client_accs)
+            print("Single client accuracy:", client_accs)
             global_model.load_state_dict(temp_weights)
             train_accuracy.append(train_acc)
             test_accuracy.append(test_acc)

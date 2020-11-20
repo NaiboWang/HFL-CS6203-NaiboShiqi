@@ -183,7 +183,7 @@ if __name__ == '__main__':
             training_acc = correct / total
             print("Accuracy for the whole training set: {}, loss: {} after {} epochs\n".format(training_acc, training_loss,
                                                                                      epoch + 1))
-            test_acc, test_loss = test_inference(args, global_model, test_dataset)
+            test_acc, test_loss, _, _ = test_inference(args, global_model, test_dataset)
             print("Accuracy for test set: {}, loss:{} after {} epochs\n".format(test_acc, test_loss, epoch + 1))
             training_accuracy.append(training_accuracy)
             training_losses.append(training_loss)

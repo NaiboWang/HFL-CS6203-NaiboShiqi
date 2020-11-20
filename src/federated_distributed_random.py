@@ -77,9 +77,9 @@ if __name__ == '__main__':
         # print global training loss every 'print_every' round
         if (epoch + 1) % print_every == 0:
             print(f' \nAvg Training Stats after {epoch + 1} global rounds:')
-            train_acc, train_loss = test_inference(args, global_model, train_dataset)
+            train_acc, train_loss, _, _ = test_inference(args, global_model, train_dataset)
             print("Accuracy for training set: {} after {} epochs\n".format(train_acc, epoch + 1))
-            test_acc, test_loss = test_inference(args, global_model, test_dataset)
+            test_acc, test_loss, _, _ = test_inference(args, global_model, test_dataset)
             print("Accuracy for test set: {}, loss:{} after {} epochs\n".format(test_acc, test_loss, epoch + 1))
             train_accuracy.append(train_acc)
             test_accuracy.append(test_acc)
