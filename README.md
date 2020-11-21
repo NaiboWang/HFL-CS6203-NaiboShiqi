@@ -379,7 +379,7 @@ Then, run the following commands:
 
     For this case, every round the coordinator will select 3x0.7, i.e., 2 workers to train.
 
-If you want to run the distributed federated averaging algorithm without secret sharing, just set `--secret_share=0` for all three workers and the coordinator.
+If you want to run the distributed federated averaging algorithm without secret sharing, just set `--secret_share=0` for all three workers and the coordinator. After the training, you can quit all workers by `Ctrl+C` one by one.
 
 -----
 #### **Federated brain and federated brain_v2 algorithm in a single-machine simulation environment**
