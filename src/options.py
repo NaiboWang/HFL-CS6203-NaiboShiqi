@@ -4,7 +4,7 @@
 This script defines the commandline arguments used in all experiments.
 """
 import argparse
-
+import socket
 
 def args_parser():
     """
@@ -12,13 +12,16 @@ def args_parser():
     Returns:
         Structural arguments list
     """
+    hostname = socket.gethostname()
+    ip = socket.gethostbyname(hostname)
+
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--dataset', type=str, default='mnist', help="name \
                         of dataset")
     parser.add_argument('--gpu', default=-1, type=int,  help="To use cuda, set \
                         to a specific GPU ID. Default set to use CPU (-1).")
-    parser.add_argument('--optimizer', type=str, default='sgd', help="type \
+    parser.add_argument('--optimizer', type=str, default='adam', help="type \
                         of optimizer")
     parser.add_argument('--iid', type=int, default=1,
                         help='Default set to IID. Set to 0 for non-IID.')
@@ -27,9 +30,9 @@ def args_parser():
                         directly sum")
     parser.add_argument('--worker_number', type=int, default=0,
                         help="worker number")
-    parser.add_argument('--address', type=str, default='172.17.0.2',
+    parser.add_argument('--address', type=str, default=ip,
                         help="address of client")
-    parser.add_argument('--ss_address', type=str, default='172.17.0.2',
+    parser.add_argument('--ss_address', type=str, default=ip,
                         help="address of secret sharing server")
 
     # federated arguments (Notation for the arguments followed from paper)
