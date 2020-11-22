@@ -9,7 +9,7 @@ Download docker file from:
 
 https://drive.google.com/file/d/13ffiBG9eFv_vZGPtpN0gbbS_mwxjkiPI/view?usp=sharing
 
-The docker file is round 19 GB, please download with patience. If you see a message `Sorry, you can't view or download this file at this time.`when downloading, you should first log in with your Google Account and then download, if you still cannot download after you download, you can contact me via email and I will copy the docker file to you. 
+The docker file is round 19 GB, please download with patience. If you see a message `Sorry, you can't view or download this file at this time.` when downloading, you should first log in with your Google Account and then download, if you still cannot download after you download, you can contact me via email and I will copy the docker file to you. 
 
 Please deploy our docker file on Linux system.
 
