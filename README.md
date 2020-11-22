@@ -9,7 +9,9 @@ Download docker file from:
 
 https://drive.google.com/file/d/13ffiBG9eFv_vZGPtpN0gbbS_mwxjkiPI/view?usp=sharing
 
-The docker file is round 19 GB, please download with patience. Before you download, I suggest you to log in with your Google Account. Please use run our docker file on Linux.
+The docker file is round 19 GB, please download with patience. If you see a message `Sorry, you can't view or download this file at this time.`when downloading, you should first log in with your Google Account and then download, if you still cannot download after you download, you can contact me via email and I will copy the docker file to you. 
+
+Please use run our docker file on Linux.
 
 Since we provide a docker file for you to run, so basically there is no library you need to install manually. I.e., you don't need to configure the environment manually.
 
@@ -272,16 +274,15 @@ Federated experiment involves training a global model using many local models.
 
     Then you can conduct the experiment:
 
+    Do remember to replace `IP_HOST_A` in the end of the following command to the real **HOST IP address** of the secret sharing backend, if you are running experiment and secret sharing backend on the same machine with the same IP address, you can skip `--ss_address` or set `--ss_address=localhost`.
+
     ```shell
     python federated_main.py --dataset=COVID19_twitter --iid=0 --epochs=100 --secret_share=1 --num_users=100 --frac=0.1 --ss_address=IP_HOST_A
     ```
-
-    Do remember to replace `IP_HOST_A` to the real **HOST IP address** of the secret sharing backend, if you are running experiment and secret sharing backend on the same machine with the same IP address, you can skip `--ss_address` or set `--ss_address=localhost`.
-
 -----
 #### **Federated averaging in real distributed environment**.
 
-Suppose you want to run Federated averaging algorithm on FEMNIST dataset with non-iid setting on 5 machines with 3 workers, 1 coordinator and 1 secret sharing backend, the details of the machines are shown below:
+Suppose you want to run Federated averaging algorithm on heart_disease dataset with iid setting on 5 machines with 3 workers, 1 coordinator and 1 secret sharing backend, the details of the machines are shown below:
 
 | ID | Role | HOST IP Address | DOCKER IP Address |
 | :-----: | :----: | :----: | :----: |
@@ -314,8 +315,8 @@ Then, run the following commands:
 
     ```shell
     cd /root/HFL_CS6203_NaiboWang_ShiqiZhang/Federated-Learnining-PyTorch/src
-    python dataset_split.py --dataset=femnist --num_users=3 --iid=0
-    python fedavg_client.py --worker_number=0 --num_users=3 --secret_share=1 --dataset=femnist --ss_address=172.26.186.80
+    python dataset_split.py --dataset=heart_disease --num_users=3 --iid=1
+    python fedavg_client.py --worker_number=0 --num_users=3 --secret_share=1 --dataset=heart_disease --ss_address=172.26.186.80
     ```
 
     Note that the argument `ss_address` whose value `172.26.186.80` is the **HOST** IP address of `Machine A`, which means the HOST IP address of the secret sharing backend, **please replace this address with your own backend HOST IP address when you are running your experiments**. And the argument `worker_number` is `0` which means the worker number for this machine is 0. Then you will see `worker 0 has started`, the worker will start to train after you have started the coordinator, now you just keep it here and wait.
@@ -326,16 +327,16 @@ Then, run the following commands:
     
     ```shell
     cd /root/HFL_CS6203_NaiboWang_ShiqiZhang/Federated-Learnining-PyTorch/src
-    python dataset_split.py --dataset=femnist --num_users=3 --iid=0
-    python fedavg_client.py --worker_number=1 --num_users=3 --secret_share=1 --dataset=femnist --ss_address=172.26.186.80
+    python dataset_split.py --dataset=heart_disease --num_users=3 --iid=1
+    python fedavg_client.py --worker_number=1 --num_users=3 --secret_share=1 --dataset=heart_disease --ss_address=172.26.186.80
     ```
 
     Run the following commands on `Machine D`:
 
     ```shell
     cd /root/HFL_CS6203_NaiboWang_ShiqiZhang/Federated-Learnining-PyTorch/src
-    python dataset_split.py --dataset=femnist --num_users=3 --iid=0
-    python fedavg_client.py --worker_number=2 --num_users=3 --secret_share=1 --dataset=femnist --ss_address=172.26.186.80
+    python dataset_split.py --dataset=heart_disease --num_users=3 --iid=1
+    python fedavg_client.py --worker_number=2 --num_users=3 --secret_share=1 --dataset=heart_disease --ss_address=172.26.186.80
     ```
 
     And you will see `Worker 1 started` and `Worker 2 started`.
@@ -361,20 +362,22 @@ Then, run the following commands:
     }
    ```
    
-   `http` is the communication protocol we are using, `172.26.186.81` to `172.26.186.83` are the **HOST IP addresses** of Worker 0 to 2. `50001` to `50003` are the ports three workers binding. If you want to add more workers, just add items follow `http://HOST_IP:PORT`, for which `PORT` is 50001+worker_number.
+   `http` is the communication protocol we are using, `172.26.186.81` to `172.26.186.83` are the **HOST IP addresses** of Worker 0 to 2. `50001` to `50003` are the ports three workers binding. If you want to add more workers, just add items follow `http://HOST_IP:PORT`, for which `PORT` is 50001+worker_number. 
+   
+   And don't set the `HOST_IP` as `localhost` or `127.0.0.1` even if the worker (client) and the coordinator are in the same machine, in this situation please set the `HOST_IP` as the `DOCKER IP Address` such as `172.17.0.2` (Again, please use `ifconfig` in the docker container to check for the `DOCKER IP Address`). 
    
    Save the configuration file by `:wq` at vim.
 
     And then, we also need to split the dataset first by:
 
     ```shell
-    python dataset_split.py --dataset=femnist --num_users=3 --iid=0
+    python dataset_split.py --dataset=heart_disease --num_users=3 --iid=1
     ```
 
     Then, you can start the coordinator and wait for the results:
 
     ```shell
-    python fedavg_coordinator.py --epochs=100 --num_users=3 --frac=0.7 --secret_share=1 --dataset=femnist
+    python fedavg_coordinator.py --epochs=100 --num_users=3 --frac=0.7 --secret_share=1 --dataset=heart_disease
     ```
 
     For this case, every round the coordinator will select 3x0.7, i.e., 2 workers to train.
@@ -386,10 +389,10 @@ If you want to run the distributed federated averaging algorithm without secret 
 
 Distributed train models without a central server, averaging local models with new version. You can see details about federated_brain and federated_brain_v2 algorithm from the report.
 
-* To run the federated brain experiment with heart_disease dataset on CPU (IID) `without` secret sharing, simulated 100 users with 10 users selected every epoch:
+* To run the federated brain experiment with femnist dataset on CPU (IID) `without` secret sharing, simulated 100 users with 10 users selected every epoch:
 
     ```shell
-    python federated_brain.py --dataset=heart_disease --iid=1 --secret_share=0 --epochs=100 --num_users=100 --frac=0.1
+    python federated_brain.py --dataset=femnist --iid=1 --secret_share=0 --epochs=100 --num_users=100 --frac=0.1
     ```
 
 * To run the federated brain_v2 experiment with heartbeat dataset on CPU `with` secret sharing under IID condition, simulated 100 users with 10 users selected every epoch.
