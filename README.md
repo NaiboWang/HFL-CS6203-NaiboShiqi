@@ -11,7 +11,7 @@ https://drive.google.com/file/d/13ffiBG9eFv_vZGPtpN0gbbS_mwxjkiPI/view?usp=shari
 
 The docker file is round 19 GB, please download with patience. If you see a message `Sorry, you can't view or download this file at this time.`when downloading, you should first log in with your Google Account and then download, if you still cannot download after you download, you can contact me via email and I will copy the docker file to you. 
 
-Please use run our docker file on Linux.
+Please deploy our docker file on Linux system.
 
 Since we provide a docker file for you to run, so basically there is no library you need to install manually. I.e., you don't need to configure the environment manually.
 
